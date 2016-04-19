@@ -30,7 +30,3 @@ function getFirstAndLast(str, callback) {
 //     console.log(firstLast);
 //   });
 
-
-var randomQuote = fortune.getFortune();
-
-console.log(randomQuote);
