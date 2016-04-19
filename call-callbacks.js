@@ -1,3 +1,5 @@
+var fortune = require('./lib/fortune.js');
+
 //Create a function called firstChar that takes a string and a callback, and “returns” the first character of the string after one second.
 // Create a function called lastChar that takes a string and “returns” the last character of the string after one second.
 //Create a function called getFirstAndLast that takes a string and “returns” the first+last character of the string.
@@ -24,6 +26,11 @@ function getFirstAndLast(str, callback) {
     });
 }
 
-getFirstAndLast("hello", function(firstLast) {
-    console.log(firstLast);
-  });
+// getFirstAndLast("hello", function(firstLast) {
+//     console.log(firstLast);
+//   });
+
+
+var randomQuote = fortune.getFortune();
+
+console.log(randomQuote);
