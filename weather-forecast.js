@@ -7,7 +7,7 @@
 // node-emoji
 
 var request = require('request');
-
+var emoji = require('node-emoji');
 var prompt = require('prompt');
 prompt.start();
 
@@ -20,35 +20,31 @@ prompt.get(['city'], function(err, result) {
         var longitude = locationResult.results[0].geometry.location.lng.toFixed(2);
         
         var url = "https://api.forecast.io/forecast/7989dc23b7e68cfcefc1852a6e2b4cd5/";
-        var newUrl = url + latitude + "," + longitude;
+        var newUrl = url + latitude + "," + longitude + "?units=si";
         
         request(newUrl, function(err, result){
+            
+            var weatherObject = {};
+            
             var resultObject = JSON.parse(result.body);
-            var currentTemp = resultObject.currently.temperature;
-            var dayOneSummary = resultObject.daily.data[1].summary;
-            var dayOneTempHigh = resultObject.daily.data[1].temperatureMax;
-            var dayOneTempLow = resultObject.daily.data[1].temperatureMin;
-            var dayTwoSummary = resultObject.daily.data[2].summary;
-            var dayTwoTempHigh = resultObject.daily.data[2].temperatureMax;
-            var dayTwoTempLow = resultObject.daily.data[2].temperatureMin;
-            var dayThreeSummary = resultObject.daily.data[3].summary;
-            var dayThreeTempHigh = resultObject.daily.data[3].temperatureMax;
-            var dayThreeTempLow = resultObject.daily.data[3].temperatureMin;
-            var dayFourSummary = resultObject.daily.data[4].summary;
-            var dayFourTempHigh = resultObject.daily.data[4].temperatureMax;
-            var dayFourTempLow = resultObject.daily.data[4].temperatureMin;
-            var dayFiveSummary = resultObject.daily.data[5].summary;
-            var dayFiveTempHigh = resultObject.daily.data[5].temperatureMax;
-            var dayFiveTempLow = resultObject.daily.data[5].temperatureMin;
-            console.log("The current temperature is " + currentTemp + "F");
-            console.log("The forecast for the next five days:");
-            console.log(dayOneSummary + " High: " + dayOneTempHigh + "F" + " Low: " + dayOneTempLow + "F");
-            console.log(dayTwoSummary + " High: " + dayTwoTempHigh + "F" + " Low: " + dayTwoTempLow + "F");
-            console.log(dayThreeSummary + " High: " + dayThreeTempHigh + "F" + " Low: " + dayThreeTempLow + "F");
-            console.log(dayFourSummary + " High: " + dayFourTempHigh + "F" + " Low: " + dayFourTempLow + "F");
-            console.log(dayFiveSummary + " High: " + dayFiveTempHigh + "F" + " Low: " + dayFiveTempLow + "F");
+            
+            var currentTemp = resultObject.currently.temperature.toFixed(0) + ".";
+            var currentWeatherSummary = resultObject.currently.summary;
+            
+            for(var i = 1; i <= 5; i++){
+                weatherObject["Summary of day " + i] = {summary: resultObject.daily.data[i].summary, max: resultObject.daily.data[i].temperatureMax.toFixed(0), min: resultObject.daily.data[i].temperatureMin.toFixed(0)};
+            }
+            console.log("Today: " + currentWeatherSummary + " with a temperature of " + currentTemp);
+             console.log(weatherObject);
+           
         });
     });
 });
-
-
+            
+            // console.log(emoji.get('umbrella'));
+            // console.log(emoji.get('cloud'));
+            // console.log(emoji.get('rain_cloud'));
+            // console.log(emoji.get('barely_sunny'));
+            // console.log(emoji.get('sun_behind_cloud'));
+            // console.log(emoji.get('sun_small_cloud'));
+            // console.log(emoji.get('fire'));
