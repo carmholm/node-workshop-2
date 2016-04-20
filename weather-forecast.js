@@ -7,8 +7,8 @@
 // node-emoji
 
 var request = require('request');
-var emoji = require('node-emoji');
 var prompt = require('prompt');
+var colors = require('colors');
 prompt.start();
 
 prompt.get(['city'], function(err, result) {
@@ -28,23 +28,15 @@ prompt.get(['city'], function(err, result) {
             
             var resultObject = JSON.parse(result.body);
             
-            var currentTemp = resultObject.currently.temperature.toFixed(0) + ".";
+            var currentTemp = resultObject.currently.temperature.toFixed(0);
             var currentWeatherSummary = resultObject.currently.summary;
             
             for(var i = 1; i <= 5; i++){
                 weatherObject["Summary of day " + i] = {summary: resultObject.daily.data[i].summary, max: resultObject.daily.data[i].temperatureMax.toFixed(0), min: resultObject.daily.data[i].temperatureMin.toFixed(0)};
             }
-            console.log("Today: " + currentWeatherSummary + " with a temperature of " + currentTemp);
-             console.log(weatherObject);
+            console.log("Today: ".rainbow + currentWeatherSummary.bold + " with a temperature of " + currentTemp.bold + ".");
+            console.log(weatherObject);
            
         });
     });
 });
-            
-            // console.log(emoji.get('umbrella'));
-            // console.log(emoji.get('cloud'));
-            // console.log(emoji.get('rain_cloud'));
-            // console.log(emoji.get('barely_sunny'));
-            // console.log(emoji.get('sun_behind_cloud'));
-            // console.log(emoji.get('sun_small_cloud'));
-            // console.log(emoji.get('fire'));
